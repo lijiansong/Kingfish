@@ -1,0 +1,113 @@
+#-*- coding: utf-8 -*-
+
+import os
+import argparse
+from preprocess import load_vocab
+
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+
+corpus_path = {
+    "DailyDialog": {
+        "train": "../dataset/DailyDialog/train/split_train.txt",
+        "dev": "../dataset/DailyDialog/validation/dialogues_validation.txt",
+        "test": "../dataset/DailyDialog/test/dialogues_test.txt"
+        },
+    "Ubuntu": {
+        "train": "../dataset/Ubuntu/split_train.txt",
+        "dev": "../dataset/Ubuntu/valid.txt",
+        "test": "../dataset/Ubuntu/test.txt"
+        },
+    "E-commerce": {
+        "train": "../dataset/E-commerce/original_data/split_train.txt",
+        "dev": "../dataset/E-commerce/original_data/true_dev.txt",
+        "test": "../dataset/E-commerce/original_data/true_test.txt"
+        }
+    }
+
+# Parse the command line arguments.
+parser = argparse.ArgumentParser()
+parser.add_argument("--corpus_name", type=str, default="DailyDialog", 
+                    help="corpus name: DailyDialog/Ubuntu/E-commerce")
+parser.add_argument("--data_path", type=str, default="data",
+                    help="the directory to the training data")
+parser.add_argument("--num_epochs", type=int, default=15,
+                    help="the number of epochs to train the data")
+parser.add_argument("--batch_size", type=int, default=64,
+                    help="the batch size")
+parser.add_argument("--max_utterance_len", type=int, default=35,
+                    help="the max length of utterance")
+parser.add_argument("--max_dialog_len", type=int, default=5,
+                    help="the max length of dialog context")
+parser.add_argument("--learning_rate", type=float, default=0.001,
+                    help="the learning rate")
+parser.add_argument("--use_beam_search", type=bool, default=False,
+                    help="whether to use beam search.")
+parser.add_argument("--beam_width", type=int, default=10,
+                    help="the beam width when decoding")
+parser.add_argument("--dropout", type=float, default=0.25,
+                    help="the value of dropout during training")
+parser.add_argument("--embedding_size", type=int, default=128,
+                    help="the size of word embeddings")
+parser.add_argument("--num_hidden_layers", type=int, default=1,
+                    help="the number of hidden layers")
+parser.add_argument("--num_hidden_units", type=int, default=256,
+                    help="the number of hidden units")
+parser.add_argument("--root_path", type=str, default="Model",
+                    help="root path to save model files")
+parser.add_argument("--save_path", type=str, default="model/model.ckpt",
+                    help="the path to save the trained model to")
+parser.add_argument("--restore_path", type=str, default="model/model.ckpt",
+                    help="the path to restore the trained model")
+parser.add_argument("--restore", type=bool, default=False,
+                    help="whether to restore from a trained model")
+
+args = parser.parse_args()
+args.train_file = corpus_path[args.corpus_name]["train"]
+args.eval_file = corpus_path[args.corpus_name]["dev"]
+args.test_file = corpus_path[args.corpus_name]["test"]
+print (args)
+
+
+# Set options.
+class Options(object):
+    """Parameters used by the SEQ2SEQ model."""
+    def __init__(self, num_epochs, batch_size, learning_rate, beam_width, 
+                 dropout, vocabulary_size, embedding_size, num_hidden_layers, 
+                 num_hidden_units, use_beam_search,  max_dialog_len, 
+                 max_utterance_len, go_index, eos_index, save_path):
+
+        super(Options, self).__init__()
+
+        self.num_epochs = num_epochs
+        self.batch_size = batch_size
+        self.learning_rate = learning_rate
+        self.beam_width = beam_width
+        self.dropout = dropout
+        self.vocabulary_size = vocabulary_size
+        self.embedding_size = embedding_size
+        self.num_hidden_layers = num_hidden_layers
+        self.num_hidden_units = num_hidden_units
+        self.use_beam_search = use_beam_search
+        self.max_dialog_len = max_dialog_len
+        self.max_utterance_len = max_utterance_len
+        self.go_index = go_index
+        self.eos_index = eos_index
+        self.save_path = save_path
+
+vocabulary, vocabulary_reverse = load_vocab(args.data_path)
+options = Options(
+    num_epochs = args.num_epochs,
+    batch_size = args.batch_size,
+    learning_rate = args.learning_rate,
+    use_beam_search = args.use_beam_search,
+    beam_width = args.beam_width,
+    dropout = args.dropout,
+    vocabulary_size = len(vocabulary),
+    embedding_size = args.embedding_size,
+    num_hidden_layers = args.num_hidden_layers,
+    num_hidden_units = args.num_hidden_units,
+    max_dialog_len = args.max_dialog_len,
+    max_utterance_len = args.max_utterance_len + 2,
+    go_index = vocabulary["<go>"],
+    eos_index = vocabulary["<eos>"],
+    save_path = os.path.join(args.root_path, args.save_path))
