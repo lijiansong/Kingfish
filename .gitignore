@@ -1,4 +1,5 @@
 *.pyc
 *.swp
 *.zip
+log
 __pycache__

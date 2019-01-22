@@ -45,7 +45,7 @@ random.shuffle(data_items)
 for index, row in data_items:
     keywords = []
     for num in range(1, 4):
-        keywords.extend(itertools.combinations(row["Keywords"], num))
+        keywords.extend(itertools.permutations(row["Keywords"], num))
     for keyword in keywords:
         corpus.append([" ".join(keyword), " ".join(row["App"])])
 
