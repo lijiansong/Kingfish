@@ -1,0 +1,167 @@
+nohup: ignoring input
+Namespace(batch_size=128, beam_width=10, corpus_name='GooglePlay', data_path='data', dropout=0.25, embedding_size=128, eval_file='data/dev.txt', learning_rate=0.001, max_dialog_len=5, max_utterance_len=35, num_epochs=15, num_hidden_layers=1, num_hidden_units=256, restore=False, restore_path='model/model.ckpt', root_path='model_v1', save_path='model/model.ckpt', test_file='data/test.txt', train_file='data/train.txt', use_beam_search=False)
+2019-01-22 09:03:20.034127: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:964] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2019-01-22 09:03:20.034547: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1432] Found device 0 with properties: 
+name: Tesla P100-PCIE-16GB major: 6 minor: 0 memoryClockRate(GHz): 1.3285
+pciBusID: 0000:00:04.0
+totalMemory: 15.90GiB freeMemory: 15.61GiB
+2019-01-22 09:03:20.034567: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1511] Adding visible gpu devices: 0
+2019-01-22 09:03:20.388012: I tensorflow/core/common_runtime/gpu/gpu_device.cc:982] Device interconnect StreamExecutor with strength 1 edge matrix:
+2019-01-22 09:03:20.388076: I tensorflow/core/common_runtime/gpu/gpu_device.cc:988]      0 
+2019-01-22 09:03:20.388085: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1001] 0:   N 
+2019-01-22 09:03:20.388396: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 15129 MB memory) -> physical GPU (device: 0, name: Tesla P100-PCIE-16GB, pci bus id: 0000:00:04.0, compute capability: 6.0)
+Building the TensorFlow graph...
+Building the TensorFlow graph...
+TensorFlow variables initialized.
+[2019-01-22 09:03:29.774920] batch=0100, loss=5.5596
+[2019-01-22 09:03:34.493751] batch=0200, loss=4.5934
+[2019-01-22 09:03:39.215735] batch=0300, loss=3.5703
+[2019-01-22 09:03:43.945759] batch=0400, loss=3.2461
+[2019-01-22 09:03:48.637432] batch=0500, loss=2.5740
+[2019-01-22 09:03:53.382643] batch=0600, loss=2.1722
+[2019-01-22 09:03:58.162859] batch=0700, loss=1.5091
+Epoch=1, train_loss=3.6285
+Epoch=1, eval_loss=5.5318
+Minimum loss reduced, save model, min_loss=5.5318
+Saving the trained model...
+[2019-01-22 09:04:03.552301] batch=0100, loss=1.3531
+[2019-01-22 09:04:08.175399] batch=0200, loss=1.1925
+[2019-01-22 09:04:12.771768] batch=0300, loss=1.0336
+[2019-01-22 09:04:17.429551] batch=0400, loss=1.0767
+[2019-01-22 09:04:22.002646] batch=0500, loss=0.9214
+[2019-01-22 09:04:26.624119] batch=0600, loss=0.9448
+[2019-01-22 09:04:31.349020] batch=0700, loss=0.6137
+Epoch=2, train_loss=1.1074
+Epoch=2, eval_loss=5.8529
+Saving the trained model...
+[2019-01-22 09:04:36.681962] batch=0100, loss=0.6372
+[2019-01-22 09:04:41.399119] batch=0200, loss=0.6088
+[2019-01-22 09:04:46.060064] batch=0300, loss=0.5518
+[2019-01-22 09:04:50.777086] batch=0400, loss=0.6043
+[2019-01-22 09:04:55.500105] batch=0500, loss=0.5424
+[2019-01-22 09:05:00.220798] batch=0600, loss=0.5533
+[2019-01-22 09:05:04.945895] batch=0700, loss=0.3662
+Epoch=3, train_loss=0.5928
+Epoch=3, eval_loss=6.1544
+Saving the trained model...
+[2019-01-22 09:05:10.353445] batch=0100, loss=0.4145
+[2019-01-22 09:05:15.152799] batch=0200, loss=0.4059
+[2019-01-22 09:05:19.867960] batch=0300, loss=0.3650
+[2019-01-22 09:05:24.589601] batch=0400, loss=0.4070
+[2019-01-22 09:05:29.171341] batch=0500, loss=0.3907
+[2019-01-22 09:05:33.744718] batch=0600, loss=0.4137
+[2019-01-22 09:05:38.434678] batch=0700, loss=0.2830
+Epoch=4, train_loss=0.4099
+Epoch=4, eval_loss=6.3842
+Saving the trained model...
+[2019-01-22 09:05:43.654164] batch=0100, loss=0.3421
+[2019-01-22 09:05:48.267593] batch=0200, loss=0.3166
+[2019-01-22 09:05:52.813838] batch=0300, loss=0.3134
+[2019-01-22 09:05:57.344251] batch=0400, loss=0.3247
+[2019-01-22 09:06:01.913332] batch=0500, loss=0.3278
+[2019-01-22 09:06:06.454043] batch=0600, loss=0.3272
+[2019-01-22 09:06:11.097282] batch=0700, loss=0.2219
+Epoch=5, train_loss=0.3216
+Epoch=5, eval_loss=6.4762
+Saving the trained model...
+[2019-01-22 09:06:16.343990] batch=0100, loss=0.2774
+[2019-01-22 09:06:20.978756] batch=0200, loss=0.2730
+[2019-01-22 09:06:25.565998] batch=0300, loss=0.2669
+[2019-01-22 09:06:30.211927] batch=0400, loss=0.2872
+[2019-01-22 09:06:34.965068] batch=0500, loss=0.2674
+[2019-01-22 09:06:39.736137] batch=0600, loss=0.2831
+[2019-01-22 09:06:44.539983] batch=0700, loss=0.2137
+Epoch=6, train_loss=0.2729
+Epoch=6, eval_loss=6.5996
+Saving the trained model...
+[2019-01-22 09:06:49.847015] batch=0100, loss=0.2554
+[2019-01-22 09:06:54.537541] batch=0200, loss=0.2603
+[2019-01-22 09:06:59.177350] batch=0300, loss=0.2337
+[2019-01-22 09:07:03.828405] batch=0400, loss=0.2486
+[2019-01-22 09:07:08.309910] batch=0500, loss=0.2459
+[2019-01-22 09:07:12.857059] batch=0600, loss=0.2569
+[2019-01-22 09:07:17.560540] batch=0700, loss=0.1865
+Epoch=7, train_loss=0.2413
+Epoch=7, eval_loss=6.6281
+Saving the trained model...
+[2019-01-22 09:07:22.910337] batch=0100, loss=0.2345
+[2019-01-22 09:07:27.870825] batch=0200, loss=0.2447
+[2019-01-22 09:07:32.677736] batch=0300, loss=0.2344
+[2019-01-22 09:07:37.316993] batch=0400, loss=0.2361
+[2019-01-22 09:07:41.933675] batch=0500, loss=0.2158
+[2019-01-22 09:07:46.548307] batch=0600, loss=0.2300
+[2019-01-22 09:07:51.326627] batch=0700, loss=0.1828
+Epoch=8, train_loss=0.2202
+Epoch=8, eval_loss=6.7295
+Saving the trained model...
+[2019-01-22 09:07:56.598881] batch=0100, loss=0.2185
+[2019-01-22 09:08:01.321413] batch=0200, loss=0.2142
+[2019-01-22 09:08:06.049263] batch=0300, loss=0.1965
+[2019-01-22 09:08:10.802393] batch=0400, loss=0.2203
+[2019-01-22 09:08:15.470625] batch=0500, loss=0.1977
+[2019-01-22 09:08:20.111612] batch=0600, loss=0.2190
+[2019-01-22 09:08:24.797727] batch=0700, loss=0.1670
+Epoch=9, train_loss=0.2049
+Epoch=9, eval_loss=6.8921
+Saving the trained model...
+[2019-01-22 09:08:30.070544] batch=0100, loss=0.2030
+[2019-01-22 09:08:34.682631] batch=0200, loss=0.2118
+[2019-01-22 09:08:39.315960] batch=0300, loss=0.1976
+[2019-01-22 09:08:43.964907] batch=0400, loss=0.2103
+[2019-01-22 09:08:48.722693] batch=0500, loss=0.1942
+[2019-01-22 09:08:53.367403] batch=0600, loss=0.2137
+[2019-01-22 09:08:58.138247] batch=0700, loss=0.1655
+Epoch=10, train_loss=0.1937
+Epoch=10, eval_loss=6.9646
+Saving the trained model...
+[2019-01-22 09:09:03.427401] batch=0100, loss=0.1938
+[2019-01-22 09:09:08.009587] batch=0200, loss=0.1980
+[2019-01-22 09:09:12.653892] batch=0300, loss=0.1920
+[2019-01-22 09:09:17.328705] batch=0400, loss=0.2015
+[2019-01-22 09:09:21.939740] batch=0500, loss=0.1811
+[2019-01-22 09:09:26.538049] batch=0600, loss=0.1979
+[2019-01-22 09:09:31.217971] batch=0700, loss=0.1649
+Epoch=11, train_loss=0.1850
+Epoch=11, eval_loss=7.0586
+Saving the trained model...
+[2019-01-22 09:09:36.513631] batch=0100, loss=0.1879
+[2019-01-22 09:09:41.185190] batch=0200, loss=0.2018
+[2019-01-22 09:09:45.711440] batch=0300, loss=0.1881
+[2019-01-22 09:09:50.304867] batch=0400, loss=0.2005
+[2019-01-22 09:09:54.889831] batch=0500, loss=0.1805
+[2019-01-22 09:09:59.635272] batch=0600, loss=0.1898
+[2019-01-22 09:10:04.425567] batch=0700, loss=0.1568
+Epoch=12, train_loss=0.1784
+Epoch=12, eval_loss=7.0964
+Saving the trained model...
+[2019-01-22 09:10:09.689623] batch=0100, loss=0.1763
+[2019-01-22 09:10:14.362760] batch=0200, loss=0.1937
+[2019-01-22 09:10:19.116181] batch=0300, loss=0.1689
+[2019-01-22 09:10:23.816109] batch=0400, loss=0.1932
+[2019-01-22 09:10:28.537170] batch=0500, loss=0.1781
+[2019-01-22 09:10:33.234853] batch=0600, loss=0.1808
+[2019-01-22 09:10:37.977504] batch=0700, loss=0.1505
+Epoch=13, train_loss=0.1731
+Epoch=13, eval_loss=7.1260
+Saving the trained model...
+[2019-01-22 09:10:43.427483] batch=0100, loss=0.1711
+[2019-01-22 09:10:48.155210] batch=0200, loss=0.1940
+[2019-01-22 09:10:52.814391] batch=0300, loss=0.1724
+[2019-01-22 09:10:57.504056] batch=0400, loss=0.1899
+[2019-01-22 09:11:02.174181] batch=0500, loss=0.1761
+[2019-01-22 09:11:06.775931] batch=0600, loss=0.1736
+[2019-01-22 09:11:11.432712] batch=0700, loss=0.1555
+Epoch=14, train_loss=0.1687
+Epoch=14, eval_loss=7.2005
+Saving the trained model...
+[2019-01-22 09:11:16.607939] batch=0100, loss=0.1661
+[2019-01-22 09:11:21.270079] batch=0200, loss=0.1829
+[2019-01-22 09:11:25.903572] batch=0300, loss=0.1755
+[2019-01-22 09:11:30.607628] batch=0400, loss=0.1806
+[2019-01-22 09:11:35.272502] batch=0500, loss=0.1672
+[2019-01-22 09:11:39.877351] batch=0600, loss=0.1603
+[2019-01-22 09:11:44.675976] batch=0700, loss=0.1489
+Epoch=15, train_loss=0.1651
+Epoch=15, eval_loss=7.3449
+Saving the trained model...
+Time to train model is 8.4385 minutes.

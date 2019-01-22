@@ -7,32 +7,22 @@ from preprocess import load_vocab
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 corpus_path = {
-    "DailyDialog": {
-        "train": "../dataset/DailyDialog/train/split_train.txt",
-        "dev": "../dataset/DailyDialog/validation/dialogues_validation.txt",
-        "test": "../dataset/DailyDialog/test/dialogues_test.txt"
-        },
-    "Ubuntu": {
-        "train": "../dataset/Ubuntu/split_train.txt",
-        "dev": "../dataset/Ubuntu/valid.txt",
-        "test": "../dataset/Ubuntu/test.txt"
-        },
-    "E-commerce": {
-        "train": "../dataset/E-commerce/original_data/split_train.txt",
-        "dev": "../dataset/E-commerce/original_data/true_dev.txt",
-        "test": "../dataset/E-commerce/original_data/true_test.txt"
+    "GooglePlay": {
+        "train": "data/train.txt",
+        "dev": "data/dev.txt",
+        "test": "data/test.txt"
         }
     }
 
 # Parse the command line arguments.
 parser = argparse.ArgumentParser()
-parser.add_argument("--corpus_name", type=str, default="DailyDialog", 
-                    help="corpus name: DailyDialog/Ubuntu/E-commerce")
+parser.add_argument("--corpus_name", type=str, default="GooglePlay", 
+                    help="corpus name: GooglePlay")
 parser.add_argument("--data_path", type=str, default="data",
                     help="the directory to the training data")
 parser.add_argument("--num_epochs", type=int, default=15,
                     help="the number of epochs to train the data")
-parser.add_argument("--batch_size", type=int, default=64,
+parser.add_argument("--batch_size", type=int, default=128,
                     help="the batch size")
 parser.add_argument("--max_utterance_len", type=int, default=35,
                     help="the max length of utterance")

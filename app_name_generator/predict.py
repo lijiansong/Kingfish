@@ -15,7 +15,7 @@ def read_test_data():
     with open(args.test_file, "r", encoding="utf-8") as f:
         dialogs, responses = [], []
         for line in f:
-            dialog = line.split("__eou__")[:-1][-6:]
+            dialog = line.split("\t")[-6:]
             dialog = [s.lower().split()[:args.max_utterance_len] for s in dialog]
             dialogs.append(dialog)
             responses.append(dialog[-1])

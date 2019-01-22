@@ -72,9 +72,9 @@ if __name__ == "__main__":
         print ("Epoch={}, eval_loss={:.4f}".format(epoch, eval_loss))
         if eval_loss < min_loss:
             min_loss = eval_loss
-            train_model.save(options.save_path)
             print ("Minimum loss reduced, save model, "
                    "min_loss={:.4f}".format(min_loss))
+        train_model.save(options.save_path)
 
     print ("Time to train model is {:.4f} minutes.".format(
         (time.time() - time_start) / 60.0))
