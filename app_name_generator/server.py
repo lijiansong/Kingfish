@@ -32,12 +32,23 @@ class MainHandler(web.RequestHandler):
         print("post vars: ", post_keyword1, post_keyword2, post_keyword3)
         keywords = [post_keyword1, post_keyword2, post_keyword3]
         params = {"query": "|".join(keywords)}
-        _, results = InferenceApiHanler.predict_app_name(params) 
-        self.render('result.html', 
-            keyword1=post_keyword1, 
-            keyword2=post_keyword2, 
-            keyword3=post_keyword3, 
-            infer_results=results)
+        _, results = InferenceApiHanler.predict_app_name(params)
+        print(results["names"])
+        self.render('result.html',
+            keyword1=post_keyword1,
+            keyword2=post_keyword2,
+            keyword3=post_keyword3,
+            infer_result1=results["names"][0],
+            infer_result2=results["names"][1],
+            infer_result3=results["names"][2],
+            infer_result4=results["names"][3],
+            infer_result5=results["names"][4],
+            infer_result6=results["names"][5],
+            infer_result7=results["names"][6],
+            infer_result8=results["names"][7],
+            infer_result9=results["names"][8],
+            infer_result10=results["names"][9],
+            )
 
 class AppNameRecommandHandler(web.RequestHandler):
     def get(self):
@@ -103,7 +114,7 @@ def main():
             )
 
         global server
-        port = 6008
+        port = 80
         server = httpserver.HTTPServer(app_inst)
         server.listen(port)
 
