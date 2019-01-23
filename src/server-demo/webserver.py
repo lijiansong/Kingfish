@@ -3,10 +3,6 @@
 '''
 REF: https://www.afternerd.com/blog/python-http-server
 '''
-# VERSIONS
-#   1.0  initial release
-#   1.1  replace req with self in request handler, add favicon
-#   1.2  added directory listings, added --no-dirlist, fixed plain text displays, logging level control, daemonize
 VERSION = '1.2'
 
 import argparse
