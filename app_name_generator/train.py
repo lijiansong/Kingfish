@@ -14,17 +14,17 @@ from preprocess import convert_to_integer
 from config import args, options
 
 
-def run_epoch(model, dialogs):
+def run_epoch(model, examples):
     losses = []
-    random.shuffle(dialogs)
-    num_examples = len(dialogs)
+    random.shuffle(examples)
+    num_examples = len(examples)
     num_batches = num_examples // options.batch_size
     for batch in range(num_batches):
         s = batch * options.batch_size
         t = s + options.batch_size
-        batch_dialogs = dialogs[s:t]
+        batch_examples = examples[s:t]
         enc_x, dec_x, dec_y, enc_x_lens, dec_x_lens = (
-            convert_to_integer(batch_dialogs, vocabulary))
+            convert_to_integer(batch_examples, vocabulary))
         if model.mode == "train":
             loss = model.train_step(
                 enc_x, dec_x, dec_y, enc_x_lens, dec_x_lens)
@@ -42,10 +42,10 @@ def run_epoch(model, dialogs):
 if __name__ == "__main__":
     time_start = time.time()
     vocabulary, vocabulary_reverse = load_vocab(args.data_path)
-    train_dialogs, _ = read_data(args.train_file, 
-        args.max_utterance_len, args.max_dialog_len + 1)
-    eval_dialogs, _ = read_data(args.eval_file, 
-        args.max_utterance_len, args.max_dialog_len + 1)
+    train_examples, _ = read_data(args.train_file, 
+        args.max_utterance_len, args.max_example_len + 1)
+    eval_examples, _ = read_data(args.eval_file, 
+        args.max_utterance_len, args.max_example_len + 1)
     if not os.path.exists(args.root_path):
         os.makedirs(args.root_path)  
 
@@ -67,8 +67,8 @@ if __name__ == "__main__":
  
     min_loss = np.inf
     for epoch in range(1, args.num_epochs + 1):
-        train_loss = run_epoch(train_model, train_dialogs)
-        eval_loss = run_epoch(eval_model, eval_dialogs)
+        train_loss = run_epoch(train_model, train_examples)
+        eval_loss = run_epoch(eval_model, eval_examples)
         print ("Epoch={}, train_loss={:.4f}".format(epoch, train_loss))
         print ("Epoch={}, eval_loss={:.4f}".format(epoch, eval_loss))
         if eval_loss < min_loss:

@@ -41,8 +41,11 @@ class Inference(object):
             for idx in result[:, i].tolist():
                 if idx == self.vocabulary["<eos>"]:
                     break
+                if idx == self.vocabulary["<unk>"]:
+                    continue
                 predict.append(self.vocabulary_reverse[idx])
-            predicts.append(predict)
+            if predict:
+                predicts.append(predict)
         return predicts
 
 
