@@ -25,46 +25,43 @@ class MainHandler(web.RequestHandler):
         self.render("index.html")
 
     def post(self):
-        '''
-        Handle POST requests.
-        '''
-        post_keyword1 = self.get_argument('post_arg1')
-        post_keyword2 = self.get_argument('post_arg1')
-        post_keyword3 = self.get_argument('post_arg1')
-        print("post var: ", post_keyword1, post_keyword2, post_keyword3)
-
+        """Handle POST requests."""
+        keywords = self.get_argument("keywords")
+        self.render
+        """
         # Get the "Back" link.
         back_link = self.get_template_path()
         print(back_link)
-        #back_link = self.path if self.path.find('?') < 0 else self.path[:self.path.find('?')]
+        #back_link = self.path if self.path.find("?") < 0 else self.path[:self.path.find("?")]
         # Tell the browser everything is OK and that there is HTML page to display.
-        #self.write('OK')
-        self.set_header('Content-type', 'text/html')
+        #self.write("OK")
+        self.set_header("Content-type", "text/html")
         # display the POST keywords
 
-        self.write('<html>')
-        self.write('  <head>')
-        self.write('    <title>Server POST Response</title>')
-        self.write('  </head>')
-        self.write('  <body>')
-        self.write('    <p>POST variables 3.</p>')
+        self.write("<html>")
+        self.write("  <head>")
+        self.write("    <title>Server POST Response</title>")
+        self.write("  </head>")
+        self.write("  <body>")
+        self.write("    <p>POST variables 3.</p>")
 
-        self.write('    <table>')
-        self.write('      <tbody>')
+        self.write("    <table>")
+        self.write("      <tbody>")
         i = 0
         for val in sorted([post_keyword1, post_keyword2, post_keyword3]):
             i += 1
-            self.write('        <tr>')
-            self.write('          <td align="right">%d</td>' % (i))
-            self.write('          <td align="right">%result 1:</td>')
-            self.write('          <td align="left">%s</td>' % val)
-            self.write('        </tr>')
-        self.write('      </tbody>')
-        self.write('    </table>')
+            self.write("        <tr>")
+            self.write("          <td align="right">%d</td>" % (i))
+            self.write("          <td align="right">%result 1:</td>")
+            self.write("          <td align="left">%s</td>" % val)
+            self.write("        </tr>")
+        self.write("      </tbody>")
+        self.write("    </table>")
 
-        #self.write('    <p><a href="%s">Back</a></p>' % (back))
-        self.write('  </body>')
-        self.write('</html>')
+        #self.write("    <p><a href="%s">Back</a></p>" % (back))
+        self.write("  </body>")
+        self.write("</html>")
+        """
 
 
 
