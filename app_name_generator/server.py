@@ -16,8 +16,55 @@ MAX_WAIT_SECONDS_BEFORE_SHUTDOWN = 0.5
 
 
 class MainHandler(web.RequestHandler):
+    def set_default_headers(self, *args, **kwargs):
+        self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header("Access-Control-Allow-Headers", "x-requested-with")
+        self.set_header("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
+
     def get(self):
         self.render("index.html")
+    def post(self):
+        '''
+        Handle POST requests.
+        '''
+        post_keyword1 = self.get_argument('post_arg1')
+        post_keyword2 = self.get_argument('post_arg1')
+        post_keyword3 = self.get_argument('post_arg1')
+        print("post var: ", post_keyword1, post_keyword2, post_keyword3)
+
+        # Get the "Back" link.
+        back_link = self.get_template_path()
+        print(back_link)
+        #back_link = self.path if self.path.find('?') < 0 else self.path[:self.path.find('?')]
+        # Tell the browser everything is OK and that there is HTML page to display.
+        #self.write('OK')
+        self.set_header('Content-type', 'text/html')
+        # display the POST keywords
+
+        self.write('<html>')
+        self.write('  <head>')
+        self.write('    <title>Server POST Response</title>')
+        self.write('  </head>')
+        self.write('  <body>')
+        self.write('    <p>POST variables 3.</p>')
+
+        self.write('    <table>')
+        self.write('      <tbody>')
+        i = 0
+        for val in sorted([post_keyword1, post_keyword2, post_keyword3]):
+            i += 1
+            self.write('        <tr>')
+            self.write('          <td align="right">%d</td>' % (i))
+            self.write('          <td align="right">%result 1:</td>')
+            self.write('          <td align="left">%s</td>' % val)
+            self.write('        </tr>')
+        self.write('      </tbody>')
+        self.write('    </table>')
+
+        #self.write('    <p><a href="%s">Back</a></p>' % (back))
+        self.write('  </body>')
+        self.write('</html>')
+
 
 
 class AppNameRecommandHandler(web.RequestHandler):
@@ -29,7 +76,7 @@ class AppNameRecommandHandler(web.RequestHandler):
         for key in required_keys:
             value = self.get_query_argument(key)
             params[key] = value
-        for k, v in optional_keys.items(): 
+        for k, v in optional_keys.items():
             value = self.get_query_argument(k, v)
             params[k] = value
         # Process request
@@ -77,9 +124,11 @@ def main():
         app_inst = web.Application([
             (r"/", MainHandler),
             (r"/get_app_name", AppNameRecommandHandler),
-            ], 
+            ],
             compress_response=True,
-            template_path=os.path.join(os.path.dirname(__file__), "templates"),)
+            template_path=os.path.join(os.path.dirname(__file__), "templates"),
+            static_path=os.path.join(os.path.dirname(__file__), "static"),
+            )
 
         global server
         port = 80
@@ -93,7 +142,7 @@ def main():
         logger.get().info("server start, port=%s" % (port))
         ioloop.IOLoop.instance().start()
     except Exception as e:
-        raise 
+        raise
 
 
 if "__main__" == __name__:
