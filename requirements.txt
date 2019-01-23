@@ -1,22 +1,3 @@
-absl-py==0.6.1
-astor==0.7.1
-certifi==2018.11.29
-gast==0.2.1.post0
-grpcio==1.17.1
-h5py==2.9.0
-Keras-Applications==1.0.6
-Keras-Preprocessing==1.0.5
-Markdown==3.0.1
-nltk==3.4
-numpy==1.15.4
-pandas==0.23.4
-protobuf==3.6.1
-python-dateutil==2.7.5
-pytz==2018.9
-singledispatch==3.4.0.3
-six==1.12.0
-tensorboard==1.12.2
-tensorflow-gpu==1.12.0
-termcolor==1.1.0
-tornado==5.1.1
-Werkzeug==0.14.1
+version https://git-lfs.github.com/spec/v1
+oid sha256:d635bc5257835ed86c0667cf7c2bbf9c56ebee054db9629dce00d856c8f4903b
+size 381
