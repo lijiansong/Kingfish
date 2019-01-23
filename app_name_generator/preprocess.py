@@ -8,14 +8,14 @@ from collections import defaultdict
 parser = argparse.ArgumentParser()
 parser.add_argument("--file_path", type=str, default="data/train.txt",
                     help = "path to the data file")
-parser.add_argument("--max_utterance_len", type = int, default = 8,
+parser.add_argument("--max_utterance_len", type = int, default = 10,
                     help = "maximum length of utterance")
-parser.add_argument("--vocabulary_size", type = int, default = 5000,
+parser.add_argument("--vocabulary_size", type = int, default = 10000,
                     help = "vocabulary size")
 parser.add_argument("--save_path", type = str, default = "data",
                     help = "the directory to save the data to")
 
-max_context_length = 3
+max_context_length = 4
 
 def read_data(file_path, max_utterance_len, max_text_len=None):
     texts = []

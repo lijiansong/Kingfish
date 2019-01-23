@@ -15,6 +15,11 @@ from log_util import g_log_inst as logger
 MAX_WAIT_SECONDS_BEFORE_SHUTDOWN = 0.5
 
 
+class MainHandler(web.RequestHandler):
+    def get(self):
+        self.render("index.html")
+
+
 class AppNameRecommandHandler(web.RequestHandler):
     def get(self):
         # Parse query params
@@ -69,9 +74,12 @@ def main():
             logger.get().warn("init failed, quit now")
             return 1
 
-        app_inst = web.Application(
-            [(r"/get_app_name", AppNameRecommandHandler),], 
-            compress_response=True)
+        app_inst = web.Application([
+            (r"/", MainHandler),
+            (r"/get_app_name", AppNameRecommandHandler),
+			], 
+            compress_response=True,
+			template_path=os.path.join(os.path.dirname(__file__), "templates"),)
 
         global server
         port = 80
