@@ -26,12 +26,18 @@ class MainHandler(web.RequestHandler):
 
     def post(self):
         """Handle POST requests."""
-        post_keyword1 = self.get_argument('post_arg1')
-        post_keyword2 = self.get_argument('post_arg2')
-        post_keyword3 = self.get_argument('post_arg3')
+        post_keyword1 = self.get_argument('post_arg1').strip()
+        post_keyword2 = self.get_argument('post_arg2').strip()
+        post_keyword3 = self.get_argument('post_arg3').strip()
         print("post vars: ", post_keyword1, post_keyword2, post_keyword3)
-        # TODO: call infer api to fill the infer_results
-        self.render('result.html', keyword1=post_keyword1, keyword2=post_keyword2, keyword3=post_keyword3, infer_results="xxx")
+        keywords = [post_keyword1, post_keyword2, post_keyword3]
+        params = {"query": "|".join(keywords)}
+        _, results = InferenceApiHanler.predict_app_name(params) 
+        self.render('result.html', 
+            keyword1=post_keyword1, 
+            keyword2=post_keyword2, 
+            keyword3=post_keyword3, 
+            infer_results=results)
 
 class AppNameRecommandHandler(web.RequestHandler):
     def get(self):
@@ -97,7 +103,7 @@ def main():
             )
 
         global server
-        port = 80
+        port = 6008
         server = httpserver.HTTPServer(app_inst)
         server.listen(port)
 
