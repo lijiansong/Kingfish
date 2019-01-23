@@ -26,8 +26,8 @@ parser.add_argument("--batch_size", type=int, default=128,
                     help="the batch size")
 parser.add_argument("--max_utterance_len", type=int, default=35,
                     help="the max length of utterance")
-parser.add_argument("--max_dialog_len", type=int, default=5,
-                    help="the max length of dialog context")
+parser.add_argument("--max_example_len", type=int, default=5,
+                    help="the max length of example context")
 parser.add_argument("--learning_rate", type=float, default=0.001,
                     help="the learning rate")
 parser.add_argument("--use_beam_search", type=bool, default=False,
@@ -63,7 +63,7 @@ class Options(object):
     """Parameters used by the SEQ2SEQ model."""
     def __init__(self, num_epochs, batch_size, learning_rate, beam_width, 
                  dropout, vocabulary_size, embedding_size, num_hidden_layers, 
-                 num_hidden_units, use_beam_search,  max_dialog_len, 
+                 num_hidden_units, use_beam_search,  max_example_len, 
                  max_utterance_len, go_index, eos_index, save_path):
 
         super(Options, self).__init__()
@@ -78,7 +78,7 @@ class Options(object):
         self.num_hidden_layers = num_hidden_layers
         self.num_hidden_units = num_hidden_units
         self.use_beam_search = use_beam_search
-        self.max_dialog_len = max_dialog_len
+        self.max_example_len = max_example_len
         self.max_utterance_len = max_utterance_len
         self.go_index = go_index
         self.eos_index = eos_index
@@ -96,7 +96,7 @@ options = Options(
     embedding_size = args.embedding_size,
     num_hidden_layers = args.num_hidden_layers,
     num_hidden_units = args.num_hidden_units,
-    max_dialog_len = args.max_dialog_len,
+    max_example_len = args.max_example_len,
     max_utterance_len = args.max_utterance_len + 2,
     go_index = vocabulary["<go>"],
     eos_index = vocabulary["<eos>"],

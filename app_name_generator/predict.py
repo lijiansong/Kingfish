@@ -13,17 +13,17 @@ from config import args, options
 
 def read_test_data():
     with open(args.test_file, "r", encoding="utf-8") as f:
-        dialogs, responses = [], []
+        examples, responses = [], []
         for line in f:
-            dialog = line.split("\t")[-6:]
-            dialog = [s.lower().split()[:args.max_utterance_len] for s in dialog]
-            dialogs.append(dialog)
-            responses.append(dialog[-1])
-    return dialogs, responses
+            example = line.split("\t")[-6:]
+            example = [s.lower().split()[:args.max_utterance_len] for s in example]
+            examples.append(example)
+            responses.append(example[-1])
+    return examples, responses
 
 if __name__ == "__main__":  
     vocabulary, vocabulary_reverse = load_vocab(args.data_path)
-    dialogs, responses = read_test_data()
+    examples, responses = read_test_data()
 
     tf.reset_default_graph()
     tf_config = tf.ConfigProto()
@@ -35,16 +35,16 @@ if __name__ == "__main__":
             model = SEQ2SEQ(session, options, "predict")
     model.restore(os.path.join(args.root_path, args.restore_path))
 
-    num_examples = len(dialogs) 
+    num_examples = len(examples) 
     num_batches = num_examples // options.batch_size
     predict_responses = []
     losses = []
     for batch in range(num_batches):
         s = batch * options.batch_size
         t = s + options.batch_size
-        batch_dialogs = dialogs[s:t]
+        batch_examples = examples[s:t]
         batch_enc_x, batch_dec_x, batch_dec_y, batch_enc_x_lens, batch_dec_x_lens = (
-            convert_to_integer(batch_dialogs, vocabulary))
+            convert_to_integer(batch_examples, vocabulary))
         responses_, loss = model.predict_step(batch_enc_x, batch_dec_x, 
             batch_dec_y, batch_enc_x_lens, batch_dec_x_lens)
         for i in range(options.batch_size):

@@ -7,7 +7,7 @@ import nn_utils
 
 
 class SEQ2SEQ(object):
-    """A hierarchical sequence to sequence model for multi-turn dialog generation."""
+
     def __init__(self, session, options, mode):
         super(SEQ2SEQ, self).__init__()
 
