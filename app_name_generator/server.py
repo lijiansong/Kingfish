@@ -37,7 +37,7 @@ class MainHandler(web.RequestHandler):
             keyword1=post_keyword1, 
             keyword2=post_keyword2, 
             keyword3=post_keyword3, 
-            infer_results=results)
+            infer_results=results["names"])
 
 class AppNameRecommandHandler(web.RequestHandler):
     def get(self):
