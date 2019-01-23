@@ -23,49 +23,16 @@ class MainHandler(web.RequestHandler):
 
     def get(self):
         self.render("index.html")
+
     def post(self):
         '''
         Handle POST requests.
         '''
         post_keyword1 = self.get_argument('post_arg1')
-        post_keyword2 = self.get_argument('post_arg1')
-        post_keyword3 = self.get_argument('post_arg1')
+        post_keyword2 = self.get_argument('post_arg2')
+        post_keyword3 = self.get_argument('post_arg3')
         print("post var: ", post_keyword1, post_keyword2, post_keyword3)
-
-        # Get the "Back" link.
-        back_link = self.get_template_path()
-        print(back_link)
-        #back_link = self.path if self.path.find('?') < 0 else self.path[:self.path.find('?')]
-        # Tell the browser everything is OK and that there is HTML page to display.
-        #self.write('OK')
-        self.set_header('Content-type', 'text/html')
-        # display the POST keywords
-
-        self.write('<html>')
-        self.write('  <head>')
-        self.write('    <title>Server POST Response</title>')
-        self.write('  </head>')
-        self.write('  <body>')
-        self.write('    <p>POST variables 3.</p>')
-
-        self.write('    <table>')
-        self.write('      <tbody>')
-        i = 0
-        for val in sorted([post_keyword1, post_keyword2, post_keyword3]):
-            i += 1
-            self.write('        <tr>')
-            self.write('          <td align="right">%d</td>' % (i))
-            self.write('          <td align="right">%result 1:</td>')
-            self.write('          <td align="left">%s</td>' % val)
-            self.write('        </tr>')
-        self.write('      </tbody>')
-        self.write('    </table>')
-
-        #self.write('    <p><a href="%s">Back</a></p>' % (back))
-        self.write('  </body>')
-        self.write('</html>')
-
-
+        self.render('result.html', keyword1=post_keyword1, keyword2=post_keyword2, keyword3=post_keyword3, infer_results="xxx")
 
 class AppNameRecommandHandler(web.RequestHandler):
     def get(self):
