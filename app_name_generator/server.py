@@ -39,6 +39,7 @@ class MainHandler(web.RequestHandler):
             keyword3=post_keyword3, 
             infer_results=results["names"])
 
+
 class AppNameRecommandHandler(web.RequestHandler):
     def get(self):
         # Parse query params
@@ -103,7 +104,7 @@ def main():
             )
 
         global server
-        port = 6008
+        port = 80
         server = httpserver.HTTPServer(app_inst)
         server.listen(port)
 
