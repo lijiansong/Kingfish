@@ -16,6 +16,7 @@ from config import args, options
 
 def run_epoch(model, dialogs):
     losses = []
+    random.shuffle(dialogs)
     num_examples = len(dialogs)
     num_batches = num_examples // options.batch_size
     for batch in range(num_batches):

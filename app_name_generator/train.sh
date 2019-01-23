@@ -1,4 +1,4 @@
 #!/bin/bash
 
 version=$1
-python -u train.py --root_path=model_$version > log/model_$version.log
+python -u train.py --root_path=model_$version

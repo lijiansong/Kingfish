@@ -170,7 +170,7 @@ class SEQ2SEQ(object):
         loss = 0.0
         if self.options.use_beam_search:
             dec_output = self.session.run(self.predict_dec_outputs, feed_dict=feed_dict)
-            predicts = dec_output.predicted_ids[:,:,0]
+            predicts = dec_output.predicted_ids
         else:
             dec_output, loss = self.session.run(
                 [self.predict_dec_outputs, self.loss], feed_dict=feed_dict)

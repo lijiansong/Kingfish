@@ -8,19 +8,19 @@ import json
 from tornado import httpserver
 from tornado import ioloop
 from tornado import web
-from inference import Inference
+from inference import InferenceApiHanler
 from log_util import g_log_inst as logger
 
 
 MAX_WAIT_SECONDS_BEFORE_SHUTDOWN = 0.5
 
 
-class SimilaritySearchHandler(web.RequestHandler):
+class AppNameRecommandHandler(web.RequestHandler):
     def get(self):
         # Parse query params
         params = {}
         required_keys = ["query"]
-        optional_keys = {"size": 30,}
+        optional_keys = {"size": 10,}
         for key in required_keys:
             value = self.get_query_argument(key)
             params[key] = value
@@ -28,7 +28,7 @@ class SimilaritySearchHandler(web.RequestHandler):
             value = self.get_query_argument(k, v)
             params[k] = value
         # Process request
-        (status, rsp) = search_core.ApiHandler.search_similar_items(params)
+        (status, rsp) = InferenceApiHanler.predict_app_name(params)
         if 200 == status:
             self.set_header("content-type", "application/json")
             self.finish(rsp)
@@ -65,20 +65,16 @@ def main():
         log_path = "log/search.log"
         logger.start(log_path, name = __name__, level = "DEBUG")
 
-        if 2 != len(sys.argv):
-            logger.get().warn("start search api failed, argv=%s" % (sys.argv))
-            return 1
-        port = int(sys.argv[1])
-
-        if False == search_core.ApiHandler.init():
+        if False == InferenceApiHanler.init():
             logger.get().warn("init failed, quit now")
             return 1
 
-        app_inst = web.Application([
-            (r"/in/nlp/sentence/search", SimilaritySearchHandler),
-        ], compress_response = True)
+        app_inst = web.Application(
+            [(r"/get_app_name", AppNameRecommandHandler),], 
+            compress_response=True)
 
         global server
+        port = 80
         server = httpserver.HTTPServer(app_inst)
         server.listen(port)
 
@@ -88,8 +84,8 @@ def main():
 
         logger.get().info("server start, port=%s" % (port))
         ioloop.IOLoop.instance().start()
-    except KeyboardInterrupt, e:
-        raise
+    except Exception as e:
+        raise 
 
 
 if "__main__" == __name__:
