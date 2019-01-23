@@ -77,9 +77,9 @@ def main():
         app_inst = web.Application([
             (r"/", MainHandler),
             (r"/get_app_name", AppNameRecommandHandler),
-			], 
+            ], 
             compress_response=True,
-			template_path=os.path.join(os.path.dirname(__file__), "templates"),)
+            template_path=os.path.join(os.path.dirname(__file__), "templates"),)
 
         global server
         port = 80
