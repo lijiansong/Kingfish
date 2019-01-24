@@ -56,9 +56,12 @@ class SEQ2SEQ(object):
                 kernel_initializer=tf.truncated_normal_initializer(stddev=0.1))
 
             if self.mode == "train":
-                train_helper = tf.contrib.seq2seq.TrainingHelper(
+                sampling_prob = tf.constant(0.4, dtype=tf.float32)
+                train_helper = tf.contrib.seq2seq.ScheduledEmbeddingTrainingHelper(
                     inputs=dec_x_embed,
                     sequence_length=self.dec_x_lens,
+                    embedding=embeddings,
+                    sampling_probability=sampling_prob,
                     name="train_helper")
                 train_decoder = tf.contrib.seq2seq.BasicDecoder(
                     cell=dec_gru_cell,

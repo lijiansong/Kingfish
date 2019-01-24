@@ -1,6 +1,12 @@
 ## Instructions
 
-### Train model
+### Preprocess Data
+```
+cd data
+python prepare_data.py googleplaystore.csv
+```
+
+### Train Model
 ```
 nohup python -u train.py --root_path=model_v0 > log/v0.log 2>&1 &
 ```
