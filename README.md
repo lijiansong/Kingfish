@@ -1,5 +1,8 @@
 # 2019 Google AI ML Winter Camp Project
-*Project name: Popular Application Name Automatic Generation*
+
+    
+##  Automatic App Name Generator - A tool to generate popular app name
+
 
 *Team name: Kingfish*
 
