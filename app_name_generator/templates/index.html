@@ -3,8 +3,6 @@
   <head>
     <meta charset="utf-8">
     <title>2019 Google AI ML Winter Camp Project Demo - KingFish Team</title>
-    <!-- Define my own favicon.ico using PNG format. -->
-    <!--<link rel="icon" type="image/png" href="logo.png">-->
     <link rel="shortcut icon" href="{{ static_url('fav.ico') }}">
     <link href="{{ static_url("index.css") }}" rel="stylesheet">
     <script src="{{ static_url("footer.js") }}"></script>
@@ -22,8 +20,7 @@
 	      </td>
           <!-- column 1 -->
 	      <td style="text-align: left">
-		<!-- <h2>Google Store App Name Auto Generation</h2> -->
-				<h2>Popular Application Name Automatic Generation</h2>
+			<h2>Automatic App Name Generator - A tool to generate popular app name</h2>
 	      </td>
           <!-- column 2 -->
 	      <td style="text-align: left">
@@ -46,12 +43,12 @@
       <br>
       <div>
 	<fieldset>
-	  <legend>&nbsp;User Searching Keywords Input&nbsp;</legend>
-	  <form method="post">
-	    <p>Keyword1:&nbsp;<input type="text" name="post_arg1"></p>
-	    <p>Keyword2:&nbsp;<input type="text" name="post_arg2"></p>
-	    <p>Keyword3:&nbsp;<input type="text" name="post_arg3"></p>
-	    <input type="submit" value="POST Submit">
+	  <legend>&nbsp;Enter keywords that are closely related to the app&nbsp;</legend>
+      </br>
+	  <form method="post" align="left">
+        <!--<textarea name="post_args", rows="7", cols="200", placeholder="Please separate your input keywords by space..."></textarea></br>-->
+        <textarea name="post_args", placeholder=" Please separate your input keywords by space..."></textarea></br>
+	    <input type="submit" value="Submit">
 	  </form>
 	</fieldset>
     <!--

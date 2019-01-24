@@ -26,17 +26,13 @@ class MainHandler(web.RequestHandler):
 
     def post(self):
         """Handle POST requests."""
-        post_keyword1 = self.get_argument('post_arg1').strip()
-        post_keyword2 = self.get_argument('post_arg2').strip()
-        post_keyword3 = self.get_argument('post_arg3').strip()
-        print("post vars: ", post_keyword1, post_keyword2, post_keyword3)
-        keywords = [post_keyword1, post_keyword2, post_keyword3]
+        post_keywords = self.get_argument('post_args').strip()
+        print("post vars: ", post_keywords)
+        keywords = [post_keywords]
         params = {"query": "|".join(keywords)}
-        _, results = InferenceApiHanler.predict_app_name(params) 
-        self.render('result.html', 
-            keyword1=post_keyword1, 
-            keyword2=post_keyword2, 
-            keyword3=post_keyword3, 
+        _, results = InferenceApiHanler.predict_app_name(params)
+        self.render('result.html',
+            keywords=post_keywords,
             infer_results=results["names"])
 
 

@@ -22,7 +22,7 @@
 	      </td>
           <!-- column 1 -->
 	      <td style="text-align: left">
-		<h2>Google Store App Name Auto Generation</h2>
+		<h2>Automatic App Name Generator - A tool to generate popular app name</h2>
 	      </td>
           <!-- column 2 -->
 	      <td style="text-align: left">
@@ -46,9 +46,7 @@
       <div>
 	<fieldset>
 	  <legend>&nbsp;User Searching Keywords Input&nbsp;</legend>
-      <p>Keyword1:&nbsp;{{keyword1}}</p>
-      <p>Keyword2:&nbsp;{{keyword2}}</p>
-      <p>Keyword3:&nbsp;{{keyword3}}</p>
+      <p>&nbsp;{{keywords}}</p>
 	</fieldset>
     <p>&nbsp;</p>
 	<fieldset>
@@ -60,8 +58,9 @@
                 {% end %}
             {% end %} 
         </table>
+</br>
         <form method="get" action="/">
-            <button type="submit">Once more</button>
+            <button type="submit">Back</button>
         </form>
 	</fieldset>
       </div>
