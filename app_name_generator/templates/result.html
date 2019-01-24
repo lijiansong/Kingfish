@@ -50,19 +50,37 @@
 	</fieldset>
     <p>&nbsp;</p>
 	<fieldset>
-	    <legend>&nbsp;Recommend App Name &nbsp;</legend>
-        <table>
+	    <legend>&nbsp;Recommend App Names &nbsp;</legend>
+        <table border="1">
+            <tr>
+                <th align="center"><b> Recommand App Name </b></th>
+                <th align="center" colspan="4"><b> Related App Info </b></th>
+            </tr>
+            <tr>
+                <th><b></b></th>
+                <th><b>Name</b></th>
+                <th align="center"><b> Rating </b></th>
+                <th align="center"><b> Installs </b></th>
+                <th align="center"><b> Reviews </b></th>
+            </tr>
             {% for result in infer_results %}
                 {% block result %}
-                  <li>{{ escape(result) }}</li>
+                    <tr>
+                        <th>{{ escape(result["recommand_name"]) }}</th>
+                        <th>{{ escape(result["App"]) }}</th>
+                        <th align="center">{{ escape(result["Rating"]) }}</th>
+                        <th align="center">{{ escape(result["Installs"]) }}</th>
+                        <th align="center">{{ escape(result["Reviews"]) }}</th>
+                    </tr>
                 {% end %}
             {% end %} 
         </table>
 </br>
+	</fieldset>
+        <br>
         <form method="get" action="/">
             <button type="submit">Back</button>
         </form>
-	</fieldset>
       </div>
 
       <!-- FOOTER -->

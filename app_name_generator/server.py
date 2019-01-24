@@ -29,10 +29,10 @@ class MainHandler(web.RequestHandler):
         post_keywords = self.get_argument('post_args').strip().split()
         print("post vars: ", post_keywords)
         params = {"query": "|".join(post_keywords)}
-        _, results = InferenceApiHanler.predict_app_name(params)
+        _, rsp = InferenceApiHanler.predict_app_name(params)
         self.render('result.html',
             keywords=" ".join(post_keywords),
-            infer_results=results["names"])
+            infer_results=rsp[:5])
 
 
 class AppNameRecommandHandler(web.RequestHandler):
@@ -90,13 +90,13 @@ def main():
             return 1
 
         app_inst = web.Application([
-            (r"/", MainHandler),
-            (r"/get_app_name", AppNameRecommandHandler),
+                (r"/", MainHandler),
+                (r"/get_app_name", AppNameRecommandHandler),
             ],
             compress_response=True,
             template_path=os.path.join(os.path.dirname(__file__), "templates"),
             static_path=os.path.join(os.path.dirname(__file__), "static"),
-            )
+        )
 
         global server
         port = 80

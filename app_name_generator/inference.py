@@ -5,12 +5,13 @@ import json
 import pickle
 import argparse
 import numpy as np
+import pandas as pd
+from gensim import corpora, models, similarities
 import tensorflow as tf
 from SEQ2SEQ import SEQ2SEQ  
 from preprocess import convert_to_integer, load_vocab 
 from utils import corpus_bleu_score
 from config import args, options
-from log_util import g_log_inst as logger
 
 
 class Inference(object):
@@ -53,24 +54,68 @@ class Inference(object):
         return predicts
 
 
+class AppSearch(object):
+    
+    def __init__(self):
+        self.app_infos = pd.read_csv(args.app_info_path)
+        app_names = self.app_infos["App"].tolist()
+        app_names = [s.split() for s in app_names]
+
+        self.dictionary = corpora.Dictionary(app_names)
+        corpus = [self.dictionary.doc2bow(s) for s in app_names]
+        self.tfidf_model = models.TfidfModel(corpus)
+        corpus_mm = self.tfidf_model[corpus]
+        self.tfidf_index = similarities.MatrixSimilarity(corpus_mm)
+        print ("Build tfidf model done.")
+
+    def _text2vec(self, text):
+        bow = self.dictionary.doc2bow(text)
+        return self.tfidf_model[bow]
+
+    def get_most_similar_app(self, query):
+        vec = self._text2vec(query)
+        sims = self.tfidf_index[vec]
+        sims_sorted = sorted(list(enumerate(sims)), 
+            key=lambda item: item[1], reverse=True)
+        idx = 0
+        while True:
+            index = sims_sorted[idx][0]
+            result = self.app_infos.iloc[index].to_dict()
+            if result["App"].split() != query:
+                break
+            if idx > 10:
+                break
+            idx += 1
+        return result
+
+
 class InferenceApiHanler(object):
     
     @classmethod
     def init(cls):
         cls.inference_inst = Inference() 
-        logger.get().info("Enable inference model done.")
+        cls.app_search_inst = AppSearch()
+        print("Enable inference model done.")
 
     @classmethod
     def predict_app_name(cls, params):
         keywords = params["query"].strip().split("|")
         predicts = cls.inference_inst.do_inference(keywords)
+        sim_app_infos = [cls.app_search_inst.get_most_similar_app(name) for name in predicts] 
         names = [" ".join(p) for p in predicts]
-        ret_info = {"names": names}
-        return (200, ret_info)
+
+        rsp = []
+        for name, info in zip(names, sim_app_infos):
+            info["recommand_name"] = name
+            for key, value in info.items():
+                info[key] = str(value)
+            rsp.append(info)
+
+        return (200, rsp)
 
 
 if __name__ == "__main__":
-    inference_inst = Inference() 
-    keywords = ["music", "player", "mp3"] 
-    result = inference_inst.do_inference(keywords)
+    InferenceApiHanler.init()
+    keywords = "classical music for baby".split()
+    result = InferenceApiHanler.predict_app_name({"query": "|".join(keywords)})
     print ("Input={}, Output={}".format(keywords, result))

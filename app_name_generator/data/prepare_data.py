@@ -44,8 +44,6 @@ print (len(data))
 data["App"] = data["App"].apply(handle_names)
 data["Keywords"] = data["App"].apply(get_noun_and_verb)
 
-data[["App", "Keywords"]].to_csv("app_names.csv", encoding="utf-8", index=False)
-
 corpus = []
 data_items = list(data.iterrows())
 random.shuffle(data_items)
@@ -63,3 +61,6 @@ random.shuffle(test_corpus)
 save_data(train_corpus, "train.txt")
 save_data(dev_corpus, "dev.txt")
 save_data(test_corpus, "test.txt")
+
+data["App"] = data["App"].apply(lambda t: " ".join(t))
+data.to_csv("app_info.csv", encoding="utf-8", index=False)

@@ -20,6 +20,8 @@ parser.add_argument("--corpus_name", type=str, default="GooglePlay",
                     help="corpus name: GooglePlay")
 parser.add_argument("--data_path", type=str, default="data",
                     help="the directory to the training data")
+parser.add_argument("--app_info_path", type=str, default="data/app_info.csv",
+                    help="the path to app info file")
 parser.add_argument("--num_epochs", type=int, default=10,
                     help="the number of epochs to train the data")
 parser.add_argument("--batch_size", type=int, default=128,
