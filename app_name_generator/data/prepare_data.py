@@ -26,6 +26,13 @@ def save_data(corpus, filepath):
         for row in corpus:
             fw.write("\t".join(row) + "\n")
 
+def is_english(s):
+    try:
+        s.encode(encoding='utf-8').decode('ascii')
+    except UnicodeDecodeError:
+        return False
+    else:
+        return True
 
 input_file = sys.argv[1]
 data = pd.read_csv(input_file)

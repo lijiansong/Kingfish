@@ -6,7 +6,7 @@ from collections import defaultdict
 
 # Parse the command line arguments.
 parser = argparse.ArgumentParser()
-parser.add_argument("--file_path", type=str, default="data/train.txt",
+parser.add_argument("--file_path", type=str, default="data/total.txt",
                     help = "path to the data file")
 parser.add_argument("--max_utterance_len", type = int, default = 10,
                     help = "maximum length of utterance")
@@ -35,7 +35,7 @@ def read_data(file_path, max_utterance_len, max_text_len=None):
 
 def construct_vocabulary(frequencies, vocabulary_size):
     tokens = sorted(frequencies, key = frequencies.get, reverse = True)
-    tokens = ["<pad>", "<go>", "<eos>", "<unk>"] + tokens[:vocabulary_size]
+    tokens = ["<pad>", "<go>", "<eos>"] + tokens[:vocabulary_size]
     vocabulary = dict(zip(tokens, range(len(tokens))))
     vocabulary_reverse = dict(zip(range(len(tokens)), tokens))
     return vocabulary, vocabulary_reverse
@@ -77,24 +77,17 @@ def convert_to_integer(texts, vocabulary):
         context = context[-max_context_length:]
         response = texts[i][-1]
 
+        context = [w for w in context if w in vocabulary]
+        response = [w for w in response if w in vocabulary]
         enc_x_ = ["<go>"] + context + ["<eos>"]
         dec_x_ = ["<go>"] + response
         dec_y_ = response + ["<eos>"]
-        """
-        print (enc_x_)
-        print (dec_x_)
-        print (dec_y_)
-        exit()
-        """
         enc_x_lens[i] = len(enc_x_)
         dec_x_lens[i] = len(dec_x_)
         
-        enc_x[i][:len(enc_x_)] = [vocabulary[w] if w in vocabulary else vocabulary["<unk>"]
-                    for w in enc_x_]
-        dec_x[i][:len(dec_x_)] = [vocabulary[w] if w in vocabulary else vocabulary["<unk>"]
-                    for w in dec_x_]
-        dec_y[i][:len(dec_y_)] = [vocabulary[w] if w in vocabulary else vocabulary["<unk>"]
-                    for w in dec_y_]
+        enc_x[i][:len(enc_x_)] = [vocabulary[w] for w in enc_x_]
+        dec_x[i][:len(dec_x_)] = [vocabulary[w] for w in dec_x_]
+        dec_y[i][:len(dec_y_)] = [vocabulary[w] for w in dec_y_]
         
     return enc_x, dec_x, dec_y, enc_x_lens, dec_x_lens
 

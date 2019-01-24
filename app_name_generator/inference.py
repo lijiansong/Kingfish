@@ -31,8 +31,8 @@ class Inference(object):
     def do_inference(self, keywords):
         enc_x, dec_x, dec_y, enc_x_lens, dec_x_lens = convert_to_integer(
             [[keywords, []]], self.vocabulary) 
-        # (batch_size, len, beam_size)
-        result, _ = self.model.predict_step(enc_x, dec_x, dec_y, enc_x_lens, dec_x_lens) 
+        result, _ = self.model.predict_step(
+            enc_x, dec_x, dec_y, enc_x_lens, dec_x_lens) 
         result = result[0] 
         num = result.shape[-1]
         predicts = []
@@ -41,11 +41,15 @@ class Inference(object):
             for idx in result[:, i].tolist():
                 if idx == self.vocabulary["<eos>"]:
                     break
-                if idx == self.vocabulary["<unk>"]:
-                    continue
                 predict.append(self.vocabulary_reverse[idx])
-            if predict:
-                predicts.append(predict)
+            uniq_predict = []
+            predict_len = len(predict)
+            for i in range(predict_len):
+                if i > 0 and predict[i] == predict[i - 1]:
+                    continue
+                uniq_predict.append(predict[i])
+            if uniq_predict:
+                predicts.append(uniq_predict)
         return predicts
 
 
@@ -67,6 +71,6 @@ class InferenceApiHanler(object):
 
 if __name__ == "__main__":
     inference_inst = Inference() 
-    keywords = ["shopping"] 
+    keywords = ["music", "player", "mp3"] 
     result = inference_inst.do_inference(keywords)
     print ("Input={}, Output={}".format(keywords, result))
