@@ -100,6 +100,7 @@ class InferenceApiHanler(object):
     @classmethod
     def predict_app_name(cls, params):
         keywords = params["query"].strip().split("|")
+        keywords = [w.lower() for w in keywords]
         predicts = cls.inference_inst.do_inference(keywords)
         sim_app_infos = [cls.app_search_inst.get_most_similar_app(name) for name in predicts] 
         names = [" ".join(p) for p in predicts]
